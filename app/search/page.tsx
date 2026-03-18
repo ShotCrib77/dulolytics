@@ -3,8 +3,9 @@ import SearchCard from "../components/SearchCard";
 
 export default function SearchPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#070b12] bg-[url(https://nexus.leagueoflegends.com/wp-content/uploads/2018/11/poros_banner-1_slno1owbdsxulmdvqomp.jpg)]">
-      <div className="relative w-full max-w-lg px-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#070b12] bg-[url(https://nexus.leagueoflegends.com/wp-content/uploads/2018/11/poros_banner-1_slno1owbdsxulmdvqomp.jpg)] bg-cover">
+      
+    <div className="relative w-full max-w-lg px-6 my-16 lg:my-0">
 
         {/* Title */}
         <div className="text-center mb-4">

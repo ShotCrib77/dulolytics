@@ -48,7 +48,7 @@ export default function StatsOverview({ ratings }: { ratings: StatRatings }) {
         </p>
         <div className="grid grid-cols-2 gap-x-8">
           {entries.map(([key, value]) => (
-            <div key={key} className="py-2.5" style={{ borderBottom: "1px solid rgba(30,58,95,0.5)" }}>
+            <div key={key} className="py-2.5">
               <div className="flex justify-between items-baseline mb-2">
                 <span className="text-xs" style={{ color: "#8a9ab0" }}>{STAT_LABELS[key]}</span>
                 <span

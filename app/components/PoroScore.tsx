@@ -47,8 +47,8 @@ export default function PoroScore({ score }: { score: number }) {
 
   return (
     <div className="flex flex-col items-center gap-1">
-      <Image src={poro.src} width={72} height={72} alt="poro" />
-      <div className="flex flex-col items-center gap-0.5">
+      <Image src={poro.src} width={72} height={72} alt="poro" className="order-2 lg:order-1" />
+      <div className="flex flex-col items-center gap-0.5 order-1 lg:order-2">
         <span
           className="tabular-nums leading-none"
           style={{
