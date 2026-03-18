@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DuLOLytics
+A casual and fun tool to see how "compatible" you are with your duo, by getting a an overview of stats, that are fetched from Riot API!
+Soon available at: [dulolytics.shotcrib.com](https://dulolytics.shotcrib.com)
+--------------------------------------------------------
+## Demo
+![user demo](./docs/user_demo.gif)
 
-## Getting Started
+## Overview
+Enter two summoner names, tags and their corresponding region and get a score of how well the two players play together. Stats are fetched from the Riot Games API (cached in Redis to save on API calls), then added together into a compatibility score. Very crude and not very accurate, but a fun baseline!
 
-First, run the development server:
+## Tech Stack
+![Redis](https://img.shields.io/badge/Redis-FF4438?logo=redis&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-06B6D4?logo=tailwindcss&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?logo=nginx&logoColor=white)
 
+## Data
+![Riot Games](https://img.shields.io/badge/Riot%20Games%20API-D32936?logo=riotgames&logoColor=white)
+
+## Setup
+### Prerequisites
+- Docker
+
+### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ShotCrib77/dulolytics
+cd dulolytics
+cp .env.example .env
+docker compose up -d --build
 ```
+Don't forget to fill in the .env file! See .env.example for reference.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Notes
+The data modeling was quite tricky. Having to really think about what data was needed for the apps purpose and how I could utlize that to create the data I wanted to get. It became a lot easier when thinking about just that, "what do I need for **this specific app**"
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Getting stats that actually reflect player/duo skill is very difficult. Esspecially since there are 5 roles and each role have a bunch of diffrent playstyles and champ types that offer diffrent things to the team. The current product is therefore not very accurate in telling players what they do good or bad, but rather serves as a rough baseline of what they do good and what they do bad (on avrage) when playing together.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
+[MIT](./LICENSE)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+DuLOLytics was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.
