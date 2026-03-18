@@ -41,7 +41,7 @@ export default function NoDataFound({ error }: { error: string }) {
             Double-check that the summoner names and tags are correct.
           </p>
           <Link
-            href="/search"
+            href="/"
             className="flex items-center gap-2 rounded-md border border-[#c8aa6e]/30 bg-[#c8aa6e]/10 px-4 py-2 text-sm font-medium text-[#c8aa6e] transition hover:bg-[#c8aa6e]/20 hover:border-[#c8aa6e]/60"
           >
             ← Back to Search
