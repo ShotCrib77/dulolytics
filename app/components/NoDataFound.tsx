@@ -36,7 +36,7 @@ export default function NoDataFound({ error }: { error: string }) {
         </div>
 
         {/* Hint card */}
-        <div className="mt-2 flex flex-col items-center gap-4 rounded-xl border border-white/5 bg-white/[0.04] px-6 py-5 backdrop-blur-sm">
+        <div className="mt-2 flex flex-col items-center gap-4 rounded-xl border border-white/5 bg-white/4 px-6 py-5 backdrop-blur-sm">
           <p className="text-sm text-[#8fa3b8]">
             Double-check that the summoner names and tags are correct.
           </p>

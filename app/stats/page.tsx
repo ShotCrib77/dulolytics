@@ -41,7 +41,7 @@ export default function StatsPage() {
 
     }
     getData();
-  }, []);
+  }, [username1, tag1, username2, tag2]);
   
 	if (error) return <NoDataFound error={error} />
 
