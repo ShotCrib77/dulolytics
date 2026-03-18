@@ -1,6 +1,6 @@
 # DuLOLytics
 A casual and fun tool to see how "compatible" you are with your duo, by getting a an overview of stats, that are fetched from Riot API!
-Soon available at: [dulolytics.shotcrib.com](https://dulolytics.shotcrib.com)
+Available at: [dulolytics.shotcrib.com](https://dulolytics.shotcrib.com)
 --------------------------------------------------------
 ## Demo
 ![user demo](./docs/user_demo.gif)
