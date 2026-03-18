@@ -1,6 +1,9 @@
 services:
   nextjs:
-    build: .
+    build:
+      context: .
+      args:
+        - RIOT_API_KEY=${RIOT_API_KEY}
     ports:
       - "4003:4003"
     env_file:
