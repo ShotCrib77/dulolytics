@@ -3,7 +3,7 @@ A casual and fun tool to see how "compatible" you are with your duo, by getting 
 Available at: [dulolytics.shotcrib.com](https://dulolytics.shotcrib.com)
 --------------------------------------------------------
 ## Demo
-![user demo](./docs/user_demo.gif)
+![demo](./docs/demo.gif)
 
 ## Overview
 Enter two summoner names, tags and their corresponding region and get a score of how well the two players play together. Stats are fetched from the Riot Games API (cached in Redis to save on API calls), then added together into a compatibility score. Very crude and not very accurate, but a fun baseline!
