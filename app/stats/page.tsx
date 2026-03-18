@@ -14,6 +14,7 @@ export default function StatsPage() {
 	const tag1 = searchParams.get("tag1");
 	const username2 = searchParams.get("username2");
 	const tag2 = searchParams.get("tag2");
+  const region = searchParams.get("region");
 			
 	const [error, setError] = useState("");
 
@@ -25,9 +26,9 @@ export default function StatsPage() {
 
   useEffect(() => {
     const getData = async () => {
-		if (!username1 || !tag1 || !username2 || !tag2) {setError("No users"); return};
+		if (!username1 || !tag1 || !username2 || !tag2 || !region) {setError("No users"); return};
 
-		const res = await fetch(`/api/duo?username1=${username1}&tag1=${tag1}&username2=${username2}&tag2=${tag2}`);
+		const res = await fetch(`/api/duo?username1=${username1}&tag1=${tag1}&username2=${username2}&tag2=${tag2}&region=${region}`);
       
       if (!res.ok) {
         const data = await res.json()
@@ -36,12 +37,11 @@ export default function StatsPage() {
       }
 
       const data = await res.json();
-      console.log(data)
       setData(data)
-
+      localStorage.removeItem("players");
     }
     getData();
-  }, [username1, tag1, username2, tag2]);
+  }, [username1, tag1, username2, tag2, region]);
   
 	if (error) return <NoDataFound error={error} />
 

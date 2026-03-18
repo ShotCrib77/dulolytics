@@ -6,7 +6,7 @@ import { Rajdhani } from "next/font/google";
 
 const rajdhani = Rajdhani({ subsets: ["latin"], weight: ["600", "700"] });
 
-const REGIONS = ["EUW", "EUNE", "NA", "KR", "BR", "LAN", "LAS", "OCE", "TR", "RU", "JP"];
+const REGIONS = ["EUW", "EUNE", "NA", "KR", "BR", "LAN", "LAS", "OCE", "TR", "RU", "JP", "SG", "TW", "VN"];
 const TAG_REGEX = /^[a-zA-Z0-9]{3,5}$/;
 
 interface SummonerInput {
@@ -22,12 +22,16 @@ export default function SearchCard() {
 
   useEffect(() => {
 		const getSaveNames = () => {
-			const saved = localStorage.getItem("players");
-			if (saved) {
-				const [p1, p2] = JSON.parse(saved);
+			const savedNames = localStorage.getItem("players");
+			if (savedNames) {
+				const [p1, p2] = JSON.parse(savedNames);
 				setPlayer1(p1);
 				setPlayer2(p2);
 			}
+      const savedRegion = localStorage.getItem("region");
+      if (savedRegion) {
+        setRegion(savedRegion)
+      }
 		}
 		getSaveNames();
   }, []);
@@ -48,8 +52,12 @@ export default function SearchCard() {
         { name: player2.name, tag: player2.tag },
       ])
     );
+    localStorage.setItem(
+      "region",
+      region
+    )
     router.push(
-      `/stats?region=${region}&username1=${player1.name}&tag1=${player1.tag}&username2=${player2.name}&tag2=${player2.tag}`
+      `/stats?region=${region}&username1=${player1.name}&tag1=${player1.tag}&username2=${player2.name}&tag2=${player2.tag}&region=${region.toLowerCase()}`
     );
   };
 

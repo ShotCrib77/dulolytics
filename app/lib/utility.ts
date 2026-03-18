@@ -1,3 +1,5 @@
+import { Platform, PLATFORM_TO_REGIONAL, Regional } from "./constants";
+
 export async function batchFetch<T>(items: string[], fetchFn: (id: string) => Promise<T>, batchSize = 5, delayMs = 1000): Promise<T[]> {
     const results: T[] = [];
 
@@ -9,4 +11,14 @@ export async function batchFetch<T>(items: string[], fetchFn: (id: string) => Pr
     }
     
     return results;
+}
+
+export function platformFromTag(tag: string): Platform {
+    const normalised = tag.replace("#", "").toLowerCase();
+    const known = Object.keys(PLATFORM_TO_REGIONAL) as Platform[];
+    return known.find(p => p === normalised || normalised.startsWith(p.replace("1", ""))) ?? "euw1";
+}
+
+export function regionalFromPlatform(platform: Platform): Regional {
+    return PLATFORM_TO_REGIONAL[platform];
 }

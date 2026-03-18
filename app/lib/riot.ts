@@ -1,7 +1,8 @@
 import { withCache } from "./cache";
+import { Platform } from "./constants";
 import { calculateData } from "./duoStats";
 import { redis } from "./redis";
-import { batchFetch } from "./utility";
+import { batchFetch, platformFromTag, regionalFromPlatform } from "./utility";
 
 const riotApiKey = process.env.RIOT_API_KEY;
 
@@ -9,18 +10,18 @@ if (!riotApiKey) {
     throw new Error("Missing environment variable: RIOT_API_KEY");
 }
 
-export async function getUser(username: string, tag: string): Promise<RiotAccount> {
+export async function getUser(username: string, tag: string, platform: Platform = "euw1"): Promise<RiotAccount> {
+    const regional = regionalFromPlatform(platform);
     const data = await withCache(
         `account:${username}:${tag}`,
         async () => {
-            const res = await fetch(`https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${username}/${tag}`, {
+            const res = await fetch(`https://${regional}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${username}/${tag}`, {
                 headers: { "X-Riot-Token": riotApiKey! }
             });
             if (!res.ok) throw new Error("Error getting user");
             return res.json();
         }
     );
-
     return {
         puuid: data.puuid as string,
         gameName: data.gameName as string,
@@ -28,18 +29,17 @@ export async function getUser(username: string, tag: string): Promise<RiotAccoun
     };
 }
 
-export async function getProfile(puuid: string): Promise<SummonerProfile> {
+export async function getProfile(puuid: string, platform: Platform = "euw1"): Promise<SummonerProfile> {
     const data = await withCache(
         `profile:${puuid}`,
         async () => {
-            const res = await fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`, {
+            const res = await fetch(`https://${platform}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`, {
                 headers: { "X-Riot-Token": riotApiKey! }
             });
             if (!res.ok) throw new Error("Error getting profile");
             return res.json();
         }
     );
-
     return {
         profileIconId: data.profileIconId as number,
         revisionDate: data.revisionDate as number,
@@ -47,37 +47,35 @@ export async function getProfile(puuid: string): Promise<SummonerProfile> {
     };
 }
 
-export async function getMatchIds(puuid: string): Promise<string[]> {
-    const res = await fetch(`https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?queue=420&start=0&count=100`, {
-        headers: {
-            "X-Riot-Token": riotApiKey!
-        }
+export async function getMatchIds(puuid: string, platform: Platform = "euw1"): Promise<string[]> {
+    const regional = regionalFromPlatform(platform);
+    const res = await fetch(`https://${regional}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?queue=420&start=0&count=100`, {
+        headers: { "X-Riot-Token": riotApiKey! }
     });
     if (!res.ok) throw new Error("Error getting match ids");
-    const data = await res.json();
-    return data as string[];
+    return res.json();
 }
 
-export async function getPlayerData(username: string, tag: string) {
-    const account = await getUser(username, tag);
-    
+export async function getPlayerData(username: string, tag: string, platform: Platform = "euw1") {
+    const account = await getUser(username, tag, platform);
+
     const [profile, matchIds] = await Promise.all([
-        getProfile(account.puuid),
-        getMatchIds(account.puuid)
+        getProfile(account.puuid, platform),
+        getMatchIds(account.puuid, platform),
     ]);
 
     return { account, profile, matchIds };
 }
 
-export async function getMatchData(matchId: string): Promise<Match> {
+export async function getMatchData(matchId: string, platform: Platform = "euw1"): Promise<Match> {
+    const regional = regionalFromPlatform(platform);
     return withCache(
         `match:${matchId}`,
         async () => {
-            const res = await fetch(`https://europe.api.riotgames.com/lol/match/v5/matches/${matchId}`, {
+            const res = await fetch(`https://${regional}.api.riotgames.com/lol/match/v5/matches/${matchId}`, {
                 headers: { "X-Riot-Token": riotApiKey! }
             });
             if (!res.ok) throw new Error("Error getting match");
-
             const data = await res.json();
             return {
                 metadata: {
@@ -109,15 +107,15 @@ export async function getMatchData(matchId: string): Promise<Match> {
     );
 }
 
-export async function getCompatibilityStats(username1: string, tag1: string, username2: string, tag2: string) {
+export async function getCompatibilityStats(username1: string, tag1: string, username2: string, tag2: string, platform: Platform = "euw1") {
     const [player1, player2] = await Promise.all([
-        getPlayerData(username1, tag1),
-        getPlayerData(username2, tag2)
+        getPlayerData(username1, tag1, platform),
+        getPlayerData(username2, tag2, platform)
     ]);
 
     const sharedMatchIds = player1.matchIds.filter(id => player2.matchIds.includes(id));
 
-    if (sharedMatchIds.length < 3) throw new Error("Not enough matches, need at leat 3");
+    if (sharedMatchIds.length < 3) throw new Error("Not enough matches, need at least 3");
 
     const cached = await Promise.all(sharedMatchIds.map(id => redis.get(`match:${id}`)));
     const cachedMatches = cached
@@ -125,10 +123,9 @@ export async function getCompatibilityStats(username1: string, tag1: string, use
         .map(m => JSON.parse(m!));
 
     const missIds = sharedMatchIds.filter((_, i) => !cached[i]);
-    const freshMatches = await batchFetch(missIds, id => getMatchData(id));
+    const freshMatches = await batchFetch(missIds, id => getMatchData(id, platform));
 
     const matches = [...cachedMatches, ...freshMatches];
-
 
     const stats = processStats(matches, player1.account.puuid, player2.account.puuid);
     const statRatings = calculateData(stats);
