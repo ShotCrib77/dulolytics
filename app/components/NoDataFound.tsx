@@ -10,7 +10,6 @@ export default function NoDataFound({ error }: { error: string }) {
 
         {/* Sad Amumu with a soft halo */}
         <div className="relative mt-2">
-          <div className="absolute inset-0 rounded-full bg-[#4a8bb5] opacity-20 blur-xl scale-125" />
           <Image
             src="/amumu-sad.webp"
             width={108}
