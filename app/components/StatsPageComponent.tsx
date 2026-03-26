@@ -49,6 +49,7 @@ export default function StatsPageComponent() {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-between font-sans bg-[#070b12]">
+      
       {/* Hex background */}
       <div className="fixed inset-0 opacity-[0.05] pointer-events-none" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 2 L36 11 L36 29 L20 38 L4 29 L4 11 Z' fill='none' stroke='%23c89b3c' stroke-width='1'/%3E%3C/svg%3E")`,

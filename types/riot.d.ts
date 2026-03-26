@@ -1,7 +1,10 @@
+type Role = "TOP" | "JUNGLE" | "MIDDLE" | "BOTTOM" | "UTILITY" ;
+
+
 type Participant = {
     puuid: string;
     championName: string;
-    teamPosition: string;
+    teamPosition: Role,
     teamId: number;
     win: boolean;
     kills: number;
@@ -13,6 +16,7 @@ type Participant = {
     totalDamageDealtToChampions: number;
     goldEarned: number;
     visionScore: number;
+    individualPosition: string;
     // summoner1Id: number;
     // summoner2Id: number;
     // item0: number;

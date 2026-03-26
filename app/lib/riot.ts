@@ -2,7 +2,7 @@ import { withCache } from "./cache";
 import { Platform } from "./constants";
 import { calculateData } from "./duoStats";
 import { redis } from "./redis";
-import { batchFetch, platformFromTag, regionalFromPlatform } from "./utility";
+import { batchFetch, regionalFromPlatform } from "./utility";
 
 const riotApiKey = process.env.RIOT_API_KEY;
 
@@ -100,6 +100,7 @@ export async function getMatchData(matchId: string, platform: Platform = "euw1")
                         totalDamageDealtToChampions: p.totalDamageDealtToChampions,
                         goldEarned: p.goldEarned,
                         visionScore: p.visionScore,
+                        individualPosition: p.individualPosition,
                     })),
                 },
             };
