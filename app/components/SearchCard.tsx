@@ -139,6 +139,7 @@ export default function SearchCard() {
               onFocus={(e) => (e.target.style.borderColor = "#c89b3c66")}
               onBlur={(e) => (e.target.style.borderColor = "#1e3a5f")}
             />
+
             <div className="flex items-center text-sm font-bold" style={{ color: "#1e3a5f" }}>
               #
             </div>
@@ -146,8 +147,10 @@ export default function SearchCard() {
               type="text"
               placeholder="TAG"
               value={value.tag}
-              maxLength={5}
-              onChange={(e) => set((prev) => ({ ...prev, tag: e.target.value }))}
+              onChange={(e) => {
+                const value = e.target.value.replace(/#/g, "").slice(0, 5);
+                set((prev) => ({ ...prev, tag: value }));
+              }}
               onKeyDown={handleKeyDown}
               className={`w-20 text-sm px-3 py-2.5 rounded-sm outline-none transition-all duration-150 ${rajdhani.className}`}
               style={inputStyle}
