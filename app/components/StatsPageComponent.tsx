@@ -44,7 +44,7 @@ export default function StatsPageComponent() {
     getData();
   }, [username1, tag1, username2, tag2, region]);
   
-  if (error) return <NoDataFound error={error} />
+  if (error) return <NoDataFound />
 
   if (!data) return <LoadingSpinner />
 
