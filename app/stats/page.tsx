@@ -35,7 +35,6 @@ export async function generateMetadata({ searchParams }: {searchParams: Promise<
   };
 }
 export default function StatsPage() {
-  
   return (
     <Suspense>
       <StatsPageComponent />
