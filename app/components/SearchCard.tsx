@@ -140,7 +140,7 @@ export default function SearchCard() {
               onBlur={(e) => (e.target.style.borderColor = "#1e3a5f")}
             />
 
-            <div className="flex items-center text-sm font-bold" style={{ color: "#1e3a5f" }}>
+            <div className="flex items-center text-sm font-bold text-[#1c4c8a]">
               #
             </div>
             <input
