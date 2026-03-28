@@ -1,7 +1,10 @@
 import Footer from "./components/Footer";
 import SearchCard from "./components/SearchCard";
+import { redis } from "./lib/redis";
 
-export default function SearchPage() {
+export default async function SearchPage() {
+  const count = await redis.get("duo:total_searches");
+
   return (
     <div className="min-h-screen flex flex-col bg-[#070b12] bg-[url(https://nexus.leagueoflegends.com/wp-content/uploads/2018/11/poros_banner-1_slno1owbdsxulmdvqomp.jpg)] bg-cover">
       <div className="flex flex-1 items-center justify-center">
@@ -25,6 +28,7 @@ export default function SearchPage() {
             </p>
           </div>
           <SearchCard />
+          {(count && Number(count) >= 100) && <p className="text-center flex items-center justify-center mt-8">{count} Friendships Ruined! {":)"}</p>}
         </div>
       </div>
       <Footer />
