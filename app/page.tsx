@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Footer from "./components/Footer";
 import SearchCard from "./components/SearchCard";
 import { redis } from "./lib/redis";
