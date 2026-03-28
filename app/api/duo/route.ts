@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ playerProfile1, playerProfile2, statRatings }, { status: 200 });
     } catch (err) {
         const message = err instanceof Error ? err.message : "Something went wrong";
+        console.error(err)
         return NextResponse.json({ error: message }, { status: 500 });
     }
 }

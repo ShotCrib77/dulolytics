@@ -57,7 +57,7 @@ export default function SearchCard() {
       region
     )
     router.push(
-      `/stats?region=${region}&username1=${player1.name}&tag1=${player1.tag}&username2=${player2.name}&tag2=${player2.tag}&region=${region.toLowerCase()}`
+      `/stats?region=${region.toLowerCase()}&username1=${player1.name}&tag1=${player1.tag}&username2=${player2.name}&tag2=${player2.tag}`
     );
   };
 

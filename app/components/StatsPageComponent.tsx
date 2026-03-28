@@ -7,16 +7,17 @@ import StatsOverview from "../components/StatsOverview";
 import NoDataFound from "../components/NoDataFound";
 import { useSearchParams } from "next/navigation";
 import Footer from "../components/Footer";
+import { ShareButton } from "./ShareButton";
 
 export default function StatsPageComponent() {
-    const searchParams = useSearchParams();
-    const username1 = searchParams.get("username1");
-    const tag1 = searchParams.get("tag1");
-    const username2 = searchParams.get("username2");
-    const tag2 = searchParams.get("tag2");
+  const searchParams = useSearchParams();
+  const username1 = searchParams.get("username1");
+  const tag1 = searchParams.get("tag1");
+  const username2 = searchParams.get("username2");
+  const tag2 = searchParams.get("tag2");
   const region = searchParams.get("region");
             
-    const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
   const [data, setData] = useState<{
     playerProfile1: PlayerProfile, 
@@ -43,9 +44,9 @@ export default function StatsPageComponent() {
     getData();
   }, [username1, tag1, username2, tag2, region]);
   
-    if (error) return <NoDataFound error={error} />
+  if (error) return <NoDataFound error={error} />
 
-    if (!data) return <LoadingSpinner />
+  if (!data) return <LoadingSpinner />
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-between font-sans bg-[#070b12]">
@@ -80,6 +81,12 @@ export default function StatsPageComponent() {
         </div>
  
         <StatsOverview ratings={data.statRatings} />
+
+        <ShareButton
+          profileIconId1={data.playerProfile1.profileIconId}
+          profileIconId2={data.playerProfile2.profileIconId}
+          score={data.statRatings.totalScore}
+        />
       </div>
  
       <Footer />

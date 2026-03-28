@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description: "DuLOLytics - a fun way to see how well you play with you duo!",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -37,7 +37,6 @@ export function calculateData(processedMatchStats: ProcessedMatchStats[]) {
     }, { kda: 0, kp: 0, deathShare: 0, visionScorePerMin: 0, csPerMin: 0, goldPerMin: 0, wins: 0 });
 
     const matchCount = individualStats.length;
-    console.log(combinedIndividualStats)
 
     const averagedStats = {
         kda: combinedIndividualStats.kda / matchCount,
@@ -49,8 +48,6 @@ export function calculateData(processedMatchStats: ProcessedMatchStats[]) {
         winRate: combinedIndividualStats.wins / matchCount,
         matchCount: matchCount,
     };
-
-    console.log(averagedStats)
 
     const ratings = {
         kda: getRating('kda', averagedStats.kda),
