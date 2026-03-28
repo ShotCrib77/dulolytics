@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "./Footer";
 
 export default function NoDataFound({ error }: { error: string }) {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center bg-[#070b12] text-white px-4">
-      {/* Subtle radial glow behind content */}
       <div className="relative flex flex-col items-center gap-6 text-center">
         <div className="absolute inset-0 -z-10 rounded-full bg-[#1a3a5c] opacity-10 blur-3xl scale-150 pointer-events-none" />
 
-        {/* Sad Amumu with a soft halo */}
         <div className="relative mt-2">
           <Image
             src="/amumu-sad.webp"
@@ -19,7 +18,6 @@ export default function NoDataFound({ error }: { error: string }) {
           />
         </div>
 
-        {/* Heading */}
         <div className="flex flex-col items-center gap-2">
           <h1
             className="text-4xl font-semibold tracking-wide text-[#c8aa6e]"
@@ -34,7 +32,6 @@ export default function NoDataFound({ error }: { error: string }) {
           )}
         </div>
 
-        {/* Hint card */}
         <div className="mt-2 flex flex-col items-center gap-4 rounded-xl border border-white/5 bg-white/4 px-6 py-5 backdrop-blur-sm">
           <p className="text-sm text-[#8fa3b8]">
             Double-check that the summoner names and tags are correct.
@@ -47,6 +44,7 @@ export default function NoDataFound({ error }: { error: string }) {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
