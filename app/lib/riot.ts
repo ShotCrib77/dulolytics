@@ -116,7 +116,7 @@ export async function getCompatibilityStats(username1: string, tag1: string, use
 
     const sharedMatchIds = player1.matchIds.filter(id => player2.matchIds.includes(id));
 
-    if (sharedMatchIds.length < 3) throw new Error("Not enough matches, need at least 3");
+    if (sharedMatchIds.length < 3) throw new Error(`Not enough matches played together (${sharedMatchIds.length}), need at least 3`);
 
     const cached = await Promise.all(sharedMatchIds.map(id => redis.get(`match:${id}`)));
     const cachedMatches = cached

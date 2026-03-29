@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "./Footer";
 
-export default function NoDataFound() {
+export default function NoDataFound({errorMessage}: {errorMessage?: string}) {
   return (
     <div className="flex flex-col h-screen bg-[#070b12] text-white px-4 overflow-hidden">
       <div className="flex flex-1 items-center justify-center">
@@ -24,6 +24,11 @@ export default function NoDataFound() {
             >
               No Data Found
             </h1>
+          {errorMessage && errorMessage.startsWith("Not enough matches played together") && (
+            <p className="text-sm text-[#7a8fa6] max-w-xs leading-relaxed">
+              {errorMessage}
+            </p>
+          )}
           </div>
           <div className="mt-2 flex flex-col items-center gap-4 rounded-xl border border-white/5 bg-white/4 px-6 py-5 backdrop-blur-sm">
             <p className="text-sm text-[#8fa3b8]">
