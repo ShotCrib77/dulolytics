@@ -38,7 +38,8 @@ export async function getProfile(puuid: string, platform: Platform = "euw1"): Pr
             });
             if (!res.ok) throw new Error("Error getting profile");
             return res.json();
-        }
+        },
+        86400 // Cache for 24 hours
     );
     return {
         profileIconId: data.profileIconId as number,
